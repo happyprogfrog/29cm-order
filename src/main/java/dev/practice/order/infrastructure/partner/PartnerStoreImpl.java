@@ -1,5 +1,6 @@
 package dev.practice.order.infrastructure.partner;
 
+import dev.practice.order.common.exception.InvalidParamException;
 import dev.practice.order.domain.partner.Partner;
 import dev.practice.order.domain.partner.PartnerStore;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +16,11 @@ public class PartnerStoreImpl implements PartnerStore {
 
     @Override
     public Partner store(Partner initPartner) {
-        if (StringUtils.isEmpty(initPartner.getPartnerName())) throw new RuntimeException("Partner token is null");
-        if (StringUtils.isEmpty(initPartner.getPartnerName())) throw new RuntimeException("Partner name is null");
-        if (StringUtils.isEmpty(initPartner.getBusinessNo())) throw new RuntimeException("Business no is null");
-        if (StringUtils.isEmpty(initPartner.getEmail())) throw new RuntimeException("Email is null");
-        if (initPartner.getStatus() == null) throw new RuntimeException("Status is null");
+        if (StringUtils.isEmpty(initPartner.getPartnerToken())) throw new InvalidParamException("initPartner.getPartnerToken()");
+        if (StringUtils.isEmpty(initPartner.getPartnerName())) throw new InvalidParamException("initPartner.getPartnerName()");
+        if (StringUtils.isEmpty(initPartner.getBusinessNo())) throw new InvalidParamException("initPartner.getBusinessNo()");
+        if (StringUtils.isEmpty(initPartner.getEmail())) throw new InvalidParamException("initPartner.getEmail()");
+        if (initPartner.getStatus() == null) throw new InvalidParamException("initPartner.getStatus()");
 
         return partnerRepository.save(initPartner);
     }
