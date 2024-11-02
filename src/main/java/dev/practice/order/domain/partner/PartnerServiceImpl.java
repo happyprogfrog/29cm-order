@@ -3,6 +3,7 @@ package dev.practice.order.domain.partner;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -12,6 +13,7 @@ public class PartnerServiceImpl implements PartnerService {
     private final PartnerReader partnerReader;
 
     @Override
+    @Transactional
     public PartnerInfo registerPartner(PartnerCommand partnerCommand) {
         // 1. command -> initPartner
         // 2. initPartner save to DB
@@ -22,6 +24,7 @@ public class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PartnerInfo getPartnerInfo(String partnerToken) {
         // 1. partnerToken -> Partner
         // 2. Partner -> PartnerInfo AND return
@@ -30,6 +33,7 @@ public class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
+    @Transactional
     public PartnerInfo enablePartner(String partnerToken) {
         Partner partner = partnerReader.getPartner(partnerToken);
         partner.enable();
@@ -37,6 +41,7 @@ public class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
+    @Transactional
     public PartnerInfo disablePartner(String partnerToken) {
         Partner partner = partnerReader.getPartner(partnerToken);
         partner.disable();
