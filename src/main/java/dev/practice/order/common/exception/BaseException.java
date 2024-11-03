@@ -2,7 +2,9 @@ package dev.practice.order.common.exception;
 
 
 import dev.practice.order.common.response.ErrorCode;
+import lombok.Getter;
 
+@Getter
 public class BaseException extends RuntimeException {
     private ErrorCode errorCode;
 
