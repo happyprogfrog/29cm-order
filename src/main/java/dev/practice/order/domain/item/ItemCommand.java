@@ -14,6 +14,7 @@ public class ItemCommand {
     @Builder
     @ToString
     public static class RegisterItemRequest {
+        private final String partnerToken;
         private final String itemName;
         private final Long itemPrice;
         private final List<RegisterItemOptionGroupRequest> itemOptionGroupRequestList; // ex) 색상, 사이즈

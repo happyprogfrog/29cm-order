@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/partners")
 public class PartnerApiController {
     private final PartnerFacade partnerFacade;
+    private final PartnerDtoMapper partnerDtoMapper;
 
     @PostMapping
     public CommonResponse<?> registerPartner(@RequestBody @Valid PartnerDto.RegisterRequest request) {
         // 1. 외부에서 전달된 파라미터 (dto) -> Command, Criteria convert
         // 2. facade 호출 .. PartnerInfo
         // 3. PartnerInfo -> CommonResponse convert return
-        var partnerInfo = partnerFacade.registerPartner(request.toCommand());
+        var command = partnerDtoMapper.of(request);
+        var partnerInfo = partnerFacade.registerPartner(command);
         var response = new PartnerDto.RegisterResponse(partnerInfo);
         return CommonResponse.success(response);
     }
